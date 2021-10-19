@@ -30,3 +30,17 @@ services:
       #     - db_users
       # depends_on:
       #     - db_users
+  db_iot:
+    container_name: postgres_IoT_service
+    restart: always
+    image: postgres
+    ports:
+      - ${PSQL_EX_PORT}:${PSQL_IN_PORT}
+    environment:
+      POSTGRES_USER: ${PSQL_USER}
+      POSTGRES_DB: ${PSQL_DB}
+      POSTGRES_PASSWORD: ${PSQL_PASSWORD}
+      # POSTGRES_HOST: ${PSQL_IN_HOST}
+    volumes:
+      - ./database/init_tables.sh:/docker-entrypoint-initdb.d/init_tables.sh
+      - ./pgdata:/var/lib/postgresql/data
